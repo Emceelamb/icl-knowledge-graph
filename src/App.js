@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import {
+  Router,
+  BrowserRouter,
+  Routes,
+  Route,
+  withRouter,
+} from "react-router-dom";
 
+import { Threedee } from "./Threedee";
+import { Twodee } from "./Twodee";
+
+const Nav = () => {
+  return (
+    <div style={{ margin: "auto" }}>
+      <ul>
+        <li>
+          <a href="/two">2D</a>
+        </li>
+        <li>
+          <a href="/three">3D</a>
+        </li>
+      </ul>
+    </div>
+  );
+};
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route exact path="/" element={<Nav />} />
+          <Route exact path="/three" element={<Threedee />} />
+          <Route exact path="/two" element={<Twodee />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
