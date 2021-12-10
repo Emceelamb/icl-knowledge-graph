@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/icl-knowledge-graph/static/css/main.a617e044.chunk.css",
-    "main.js": "/icl-knowledge-graph/static/js/main.1e1f74d7.chunk.js",
-    "main.js.map": "/icl-knowledge-graph/static/js/main.1e1f74d7.chunk.js.map",
+    "main.js": "/icl-knowledge-graph/static/js/main.449294ed.chunk.js",
+    "main.js.map": "/icl-knowledge-graph/static/js/main.449294ed.chunk.js.map",
     "runtime-main.js": "/icl-knowledge-graph/static/js/runtime-main.6f231a6f.js",
     "runtime-main.js.map": "/icl-knowledge-graph/static/js/runtime-main.6f231a6f.js.map",
-    "static/js/2.3bdd69cc.chunk.js": "/icl-knowledge-graph/static/js/2.3bdd69cc.chunk.js",
-    "static/js/2.3bdd69cc.chunk.js.map": "/icl-knowledge-graph/static/js/2.3bdd69cc.chunk.js.map",
+    "static/js/2.8fbf993c.chunk.js": "/icl-knowledge-graph/static/js/2.8fbf993c.chunk.js",
+    "static/js/2.8fbf993c.chunk.js.map": "/icl-knowledge-graph/static/js/2.8fbf993c.chunk.js.map",
     "static/js/3.7e7a2928.chunk.js": "/icl-knowledge-graph/static/js/3.7e7a2928.chunk.js",
     "static/js/3.7e7a2928.chunk.js.map": "/icl-knowledge-graph/static/js/3.7e7a2928.chunk.js.map",
     "index.html": "/icl-knowledge-graph/index.html",
     "static/css/main.a617e044.chunk.css.map": "/icl-knowledge-graph/static/css/main.a617e044.chunk.css.map",
-    "static/js/2.3bdd69cc.chunk.js.LICENSE.txt": "/icl-knowledge-graph/static/js/2.3bdd69cc.chunk.js.LICENSE.txt"
+    "static/js/2.8fbf993c.chunk.js.LICENSE.txt": "/icl-knowledge-graph/static/js/2.8fbf993c.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.6f231a6f.js",
-    "static/js/2.3bdd69cc.chunk.js",
+    "static/js/2.8fbf993c.chunk.js",
     "static/css/main.a617e044.chunk.css",
-    "static/js/main.1e1f74d7.chunk.js"
+    "static/js/main.449294ed.chunk.js"
   ]
 }
