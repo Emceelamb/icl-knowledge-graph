@@ -25,10 +25,10 @@ export const useData = () => {
 
         d.map((item) => {
           const source = formattedData["nodes"].findIndex(
-            (obj) => obj.value == item["parent_node"]
+            (obj) => obj.value === item["parent_node"]
           );
           const target = formattedData["nodes"].findIndex(
-            (obj) => obj.value == item["child_node"]
+            (obj) => obj.value === item["child_node"]
           );
           // formattedData["links"].push({source: source, target: target, value: item["score"]})
           formattedData["links"].push({

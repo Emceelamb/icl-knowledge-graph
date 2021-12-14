@@ -1,4 +1,5 @@
 {
+  "homepage": "https://emceelamb.github.io/icl-knowledge-graph",
   "name": "knowledge-graph",
   "version": "0.1.0",
   "private": true,
@@ -20,7 +21,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "preinstall": "npx npm-force-resolutions"
+    "preinstall": "npx npm-force-resolutions",
+    "predeploy": "npm run build", 
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -42,5 +45,8 @@
   },
   "resolutions": {
     "bezier-js": "4.0.3"
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
   }
 }
