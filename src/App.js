@@ -10,6 +10,7 @@ import {
 
 import { Threedee } from "./Threedee";
 import { Twodee } from "./Twodee";
+import { Twodeetest } from "./Twodeetest";
 
 const Nav = () => {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route exact path="" element={<Threedee />} />
           <Route exact path="/three" element={<Threedee />} />
           <Route exact path="/two" element={<Twodee />} />
+          <Route exact path="/tww" element={<Twodeetest />} />
         </Routes>
       </Router>
     </>

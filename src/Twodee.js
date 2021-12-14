@@ -14,7 +14,7 @@ export const Twodee = () => {
   const colorScale = scaleLinear().domain([1, 10]).range(["#eff2f2", "red"]);
 
   useEffect(() => {
-    console.log(data);
+    console.log(data, "this is teh data");
     if (!data) {
       return <>Loading</>;
     }

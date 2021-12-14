@@ -5,7 +5,7 @@ import { scaleLinear } from "d3";
 import { useData } from "./useData";
 
 export const Threedee = () => {
-  const data = useData();
+  const data = useData(3);
 
   const forceGraph = useRef(null);
 

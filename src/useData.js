@@ -31,12 +31,12 @@ export const useData = (NUM) => {
         // console.log(formattedData.nodes.filter((d) => d.id == "automobiles"));
 
         d.map((item) => {
-          const source = formattedData["nodes"].findIndex(
-            (obj) => obj.value === item["parent_node"]
-          );
-          const target = formattedData["nodes"].findIndex(
-            (obj) => obj.value === item["child_node"]
-          );
+          // const source = formattedData["nodes"].findIndex(
+          //   (obj) => obj.value === item["parent_node"]
+          // );
+          // const target = formattedData["nodes"].findIndex(
+          //   (obj) => obj.value === item["child_node"]
+          // );
           // formattedData["links"].push({source: source, target: target, value: item["score"]})
           formattedData["links"].push({
             source: item["parent_node"],
