@@ -34,6 +34,11 @@ export const Threedee = () => {
           // linkColor={(d) => colorScale(d.value)}
           // forceEngine={'graph'}
           ref={forceGraph}
+          onNodeDragEnd={(node) => {
+            node.fx = node.x;
+            node.fy = node.y;
+            node.fz = node.z;
+          }}
         />
       ) : (
         <>Loading</>

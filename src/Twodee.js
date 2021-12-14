@@ -6,7 +6,8 @@ import { scaleLinear } from "d3";
 import { useData } from "./useData";
 
 export const Twodee = () => {
-  const data = useData();
+  const data = useData(1);
+  //const [data, setData] = useState(null);
   const forceGraph = useRef(null);
 
   const myScale = scaleLinear().domain([1, 10]).range([0, 3]);
@@ -19,6 +20,9 @@ export const Twodee = () => {
     }
     forceGraph.current.d3Force("charge").strength(-500);
   });
+
+  // const demoData = useData(x);
+  // setData(demoData);
   return (
     <div>
       {data ? (
@@ -34,6 +38,10 @@ export const Twodee = () => {
           // linkColor={(d) => colorScale(d.value)}
           // forceEngine={'graph'}
           ref={forceGraph}
+          onNodeDragEnd={(node) => {
+            node.fx = node.x;
+            node.fy = node.y;
+          }}
         />
       ) : (
         <>Loading</>

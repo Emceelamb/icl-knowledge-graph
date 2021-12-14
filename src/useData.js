@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { json } from "d3";
 
-const jsonUrl =
-  "https://gist.githubusercontent.com/Emceelamb/565435c5930849fa9ad1b75571ac5d07/raw/d54ed7b4fa0cd936d4c1e7b0164906f330145962/gme_correlation.json";
-export const useData = () => {
+export const useData = (NUM) => {
   const [data, setData] = useState(null);
+
+  const jsonUrl = [
+    "https://gist.githubusercontent.com",
+    "Emceelamb",
+    "565435c5930849fa9ad1b75571ac5d07",
+    "raw",
+    "b2904e1d8019318a8fa494261460574731a42b27", // commit string
+    `gme_correlation_${NUM}.json`,
+  ].join("/");
 
   useEffect(() => {
     const formattedData = { nodes: [], links: [] };
