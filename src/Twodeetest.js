@@ -1,4 +1,4 @@
-import { ForceGraph2D } from "react-force-graph";
+import { ForceGraph3D } from "react-force-graph";
 
 import { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import { scaleLinear } from "d3";
@@ -19,7 +19,8 @@ export const Twodeetest = () => {
     let parents = [...new Set(nodeList.map((node) => node["parent_node"]))];
     let children = [...new Set(nodeList.map((node) => node["child_node"]))];
     let concattedArray = parents.concat(children);
-    return concattedArray.map((nd) => {
+    let unique = [...new Set(concattedArray)];
+    return unique.map((nd) => {
       return { id: nd };
     });
   };
@@ -45,8 +46,6 @@ export const Twodeetest = () => {
   };
 
   const fetchData = async (dataId, prevData) => {
-    const formattedData = prevData;
-
     console.log("fetch data", dataId);
     const jsonUrl = [
       "https://gist.githubusercontent.com",
@@ -65,90 +64,12 @@ export const Twodeetest = () => {
     const new_links = getLinks(jsonData);
     console.log(data);
     setData(({ nodes, links }) => {
-      const id = nodes.length;
       const filteredNodes = filterById(new_nodes, [...nodes]);
       return {
         nodes: [...nodes, ...filteredNodes],
         links: [...links, ...new_links],
       };
     });
-  };
-
-  const getData = async (id, prevData) => {
-    const jsonUrl = [
-      "https://gist.githubusercontent.com",
-      "Emceelamb",
-      "565435c5930849fa9ad1b75571ac5d07",
-      "raw",
-      "b2904e1d8019318a8fa494261460574731a42b27", // commit string
-      `gme_correlation_1.json`,
-    ].join("/");
-
-    let formattedData = prevData;
-    console.log(formattedData, "previous");
-    const res = await fetch(jsonUrl);
-    const jsonData = await res.json();
-
-    /* GET UNIQUE NODES */
-    const uniqueParent = [
-      ...new Set(jsonData.map((item) => item["parent_node"])),
-    ];
-    uniqueParent.map((node) => {
-      if (formattedData["nodes"].some((n) => n["id"] === node)) {
-      } else {
-        formattedData["nodes"].push({ id: node });
-      }
-    });
-
-    const uniqueChild = [
-      ...new Set(jsonData.map((item) => item["child_node"])),
-    ];
-    uniqueChild.map((node) => {
-      if (formattedData["nodes"].some((n) => n["id"] === node)) {
-      } else {
-        formattedData["nodes"].push({ id: node });
-      }
-    });
-
-    /*************
-      Get links
-    *************/
-
-    // jsonData.map((fetchedNode) => {
-    //   const source = formattedData["nodes"].findIndex(
-    //     (existingNode) => existingNode.value === fetchedNode["parent_node"]
-    //   );
-    //   console.log(source);
-    // });
-
-    jsonData.map((node) => {
-      if (
-        formattedData["links"].some(
-          (n) =>
-            n["source"] === node["parent_node"] &&
-            n["target"] === node["child_node"]
-        )
-      ) {
-        console.log("li.nk eits");
-      } else {
-        formattedData["links"].push({
-          source: node["parent_node"],
-          target: node["child_node"],
-          value: node["score"],
-        });
-        // console.log(
-        //   {
-        //     source: node["parent_node"],
-        //     target: node["child_node"],
-        //     value: node["score"],
-        //   },
-        //   "link does notexists"
-        // );
-      }
-    });
-
-    console.log(formattedData, "formatted data");
-    // setData(formattedData);
   };
 
   useEffect(() => {
@@ -183,7 +104,7 @@ export const Twodeetest = () => {
   return (
     <div>
       {data ? (
-        <ForceGraph2D
+        <ForceGraph3D
           graphData={data}
           nodeLabel={(d) => {
             console.log(d, d.id);
