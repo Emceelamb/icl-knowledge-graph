@@ -15,52 +15,63 @@ export const Twodeetest = () => {
   const myScale = scaleLinear().domain([1, 10]).range([0, 3]);
   const colorScale = scaleLinear().domain([1, 10]).range(["#eff2f2", "red"]);
 
-  const fetchData = async (id) => {
-    const formattedData = { nodes: [], links: [] };
+  const getUniqueNodes = (nodeList) => {
+    let parents = [...new Set(nodeList.map((node) => node["parent_node"]))];
+    let children = [...new Set(nodeList.map((node) => node["child_node"]))];
+    let concattedArray = parents.concat(children);
+    return concattedArray.map((nd) => {
+      return { id: nd };
+    });
+  };
+
+  const filterById = (a, b) => {
+    let res = [];
+    res = a.filter((el) => {
+      return !b.find((element) => {
+        return element.id === el.id;
+      });
+    });
+    return res;
+  };
+
+  const getLinks = (nodeList) => {
+    return nodeList.map((nd) => {
+      return {
+        source: nd["parent_node"],
+        target: nd["child_node"],
+        value: nd["score"],
+      };
+    });
+  };
+
+  const fetchData = async (dataId, prevData) => {
+    const formattedData = prevData;
+
+    console.log("fetch data", dataId);
     const jsonUrl = [
       "https://gist.githubusercontent.com",
       "Emceelamb",
       "565435c5930849fa9ad1b75571ac5d07",
       "raw",
       "b2904e1d8019318a8fa494261460574731a42b27", // commit string
-      `gme_correlation_${id}.json`,
+      `gme_correlation_${dataId}.json`,
     ].join("/");
 
     const res = await fetch(jsonUrl);
     const jsonData = await res.json();
-    const uniqueParent = [
-      ...new Set(jsonData.map((item) => item["parent_node"])),
-    ];
-    uniqueParent.map((node) => formattedData.nodes.push({ id: node }));
 
-    const uniqueChild = [
-      ...new Set(jsonData.map((item) => item["child_node"])),
-    ];
-    uniqueChild.map((node) => {
-      // console.log(formattedData.nodes.filter(e=>e.id===node), "nodes");
-      if (formattedData.nodes.filter((e) => e.id === node).length === 0) {
-        formattedData.nodes.push({ id: node });
-      }
-    });
-    //links: [{"source": 3, "target": 2, "value": "aux"}, ...]
-    // console.log(formattedData.nodes.filter((d) => d.id == "automobiles"));
+    const new_nodes = getUniqueNodes(jsonData);
 
-    jsonData.map((item) => {
-      // const source = formattedData["nodes"].findIndex(
-      //   (obj) => obj.value === item["parent_node"]
-      // );
-      // const target = formattedData["nodes"].findIndex(
-      //   (obj) => obj.value === item["child_node"]
-      // );
-      // formattedData["links"].push({source: source, target: target, value: item["score"]})
-      formattedData["links"].push({
-        source: item["parent_node"],
-        target: item["child_node"],
-        value: item["score"],
-      });
+    const new_links = getLinks(jsonData);
+    console.log(data);
+    setData(({ nodes, links }) => {
+      const id = nodes.length;
+      const filteredNodes = filterById(new_nodes, [...nodes]);
+      return {
+        nodes: [...nodes, ...filteredNodes],
+        links: [...links, ...new_links],
+      };
     });
-    console.log(formattedData);
-    setData(formattedData);
   };
 
   const getData = async (id, prevData) => {
@@ -158,9 +169,11 @@ export const Twodeetest = () => {
     // getData(updateNo, data);
     // fetchData(2);
     const timer = setInterval(() => {
+      if (updateNo > 6) {
+        clearInterval(timer);
+      }
       fetchData(updateNo);
       updateNo > 8 ? (updateNo = 1) : updateNo++;
-      setDataLoad(true);
     }, 2000);
     return () => clearInterval(timer);
   }, []);

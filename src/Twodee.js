@@ -6,7 +6,7 @@ import { scaleLinear } from "d3";
 import { useData } from "./useData";
 
 export const Twodee = () => {
-  const data = useData(1);
+  const data = useData(9);
   //const [data, setData] = useState(null);
   const forceGraph = useRef(null);
 
