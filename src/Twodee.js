@@ -6,7 +6,7 @@ import { scaleLinear } from "d3";
 import { useData } from "./useData";
 
 export const Twodee = () => {
-  const data = useData(1);
+  const data = useData(9);
   //const [data, setData] = useState(null);
   const forceGraph = useRef(null);
 
@@ -14,7 +14,7 @@ export const Twodee = () => {
   const colorScale = scaleLinear().domain([1, 10]).range(["#eff2f2", "red"]);
 
   useEffect(() => {
-    console.log(data);
+    console.log(data, "this is teh data");
     if (!data) {
       return <>Loading</>;
     }

@@ -10,6 +10,8 @@ import {
 
 import { Threedee } from "./Threedee";
 import { Twodee } from "./Twodee";
+import { TwodeePolling } from "./TwodeePolling";
+import { ThreedeePolling } from "./ThreedeePolling";
 
 const Nav = () => {
   return (
@@ -20,12 +22,18 @@ const Nav = () => {
           data
         </a>
       </p>
-      <ul>
+      <ul className="menu">
         <li>
           <Link to="/two">2D</Link>
         </li>
         <li>
           <Link to="/three">3D</Link>
+        </li>
+        <li>
+          <Link to="/polling">2D polling</Link>
+        </li>
+        <li>
+          <Link to="/3dpolling">3D polling</Link>
         </li>
       </ul>
     </div>
@@ -40,6 +48,8 @@ function App() {
           <Route exact path="" element={<Threedee />} />
           <Route exact path="/three" element={<Threedee />} />
           <Route exact path="/two" element={<Twodee />} />
+          <Route exact path="/polling" element={<TwodeePolling />} />
+          <Route exact path="/3dpolling" element={<ThreedeePolling />} />
         </Routes>
       </Router>
     </>
