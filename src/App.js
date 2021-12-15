@@ -28,6 +28,9 @@ const Nav = () => {
         <li>
           <Link to="/three">3D</Link>
         </li>
+        <li>
+          <Link to="/polling">polling</Link>
+        </li>
       </ul>
     </div>
   );
@@ -41,7 +44,7 @@ function App() {
           <Route exact path="" element={<Threedee />} />
           <Route exact path="/three" element={<Threedee />} />
           <Route exact path="/two" element={<Twodee />} />
-          <Route exact path="/tww" element={<Twodeetest />} />
+          <Route exact path="/polling" element={<Twodeetest />} />
         </Routes>
       </Router>
     </>
