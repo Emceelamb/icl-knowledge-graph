@@ -1,11 +1,11 @@
-import { ForceGraph3D } from "react-force-graph";
+import { ForceGraph2D } from "react-force-graph";
 
 import { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import { scaleLinear } from "d3";
 
 import { useData } from "./useData";
 
-export const Twodeetest = () => {
+export const TwodeePolling = () => {
   const [data, setData] = useState({ nodes: [], links: [] });
   const [dataLoad, setDataLoad] = useState(false);
   const [datasetID, setDatasetID] = useState(2);
@@ -89,6 +89,7 @@ export const Twodeetest = () => {
   useEffect(() => {
     // getData(updateNo, data);
     // fetchData(2);
+    fetchData(updateNo);
     const timer = setInterval(() => {
       if (updateNo > 6) {
         clearInterval(timer);
@@ -104,7 +105,7 @@ export const Twodeetest = () => {
   return (
     <div>
       {data ? (
-        <ForceGraph3D
+        <ForceGraph2D
           graphData={data}
           nodeLabel={(d) => {
             console.log(d, d.id);
