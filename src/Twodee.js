@@ -1,12 +1,26 @@
 import { ForceGraph2D } from "react-force-graph";
 
-import { useRef, useState, useEffect, useCallback, useMemo } from "react";
+import { useRef, useState,  useEffect } from "react";
 import { scaleLinear } from "d3";
 
-import { useData } from "./useData";
+// import { useData } from "./useData";
+import { useCSV } from "./useCSV";
+
+const csvURL = [
+  'https://gist.githubusercontent.com',
+  'Emceelamb',
+  '184a627df887fc945d202c69333cb133',
+  'raw',
+  '016259ba32443fd673e01693b30f3f91920aed7c',
+  //'transformers_2021-11-09.csv'   // AAPL STOCKS
+  'correlation_bert_2021-10-13_10_59_32.csv'  // BERT
+].join('/')
 
 export const Twodee = () => {
-  const data = useData(9);
+  const data = useCSV(csvURL);
+  // const data = useData(csvData);
+  
+  // const data = useData(csvData);
   //const [data, setData] = useState(null);
   const forceGraph = useRef(null);
 
@@ -14,7 +28,6 @@ export const Twodee = () => {
   const colorScale = scaleLinear().domain([1, 10]).range(["#eff2f2", "red"]);
 
   useEffect(() => {
-    console.log(data, "this is teh data");
     if (!data) {
       return <>Loading</>;
     }
