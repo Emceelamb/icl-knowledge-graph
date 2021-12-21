@@ -68,7 +68,6 @@ export const useCSV = (dataURL) => {
           value: item["value"],
         });
       });
-      console.log("formatted: ", formattedData);
 
       setData(formattedData)
     }

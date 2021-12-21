@@ -124,6 +124,9 @@ export const TwodeePolling = () => {
             node.fx = node.x;
             node.fy = node.y;
           }}
+          nodeLabel={(d) => d.id}
+          linkLabel={(d) => `${d.source.id} > ${d.target.id} <br>Correlation value: ${d.value}`}
+          linkOpacity={1}
         />
       ) : (
         <>Loading...</>

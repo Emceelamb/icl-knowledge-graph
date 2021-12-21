@@ -49,17 +49,17 @@ export const Twodee = () => {
       </div>
       {data ? (
         <ForceGraph2D
+          ref={forceGraph}
           graphData={data}
           nodeLabel={(d) => d.id}
           linkLabel={(d) =>{ console.log(d) ;return `${d.source.id} > ${d.target.id} <br>Correlation value: ${d.value}`}}
           // linkCurvature={0.1}
           nodeColor={(d) => (d.id[0] === "$" ? "#19686b" : "yellow")}
-          linkWidth={(d) => { console.log(d.value, myScale(d.value)); return myScale(d.value)}}
+          linkWidth={(d) => { return myScale(d.value)}}
           // linkCurveRotation={1}
           linkOpacity={0.8}
           // linkColor={(d) => colorScale(d.value)}
           // forceEngine={'graph'}
-          ref={forceGraph}
 
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id;
