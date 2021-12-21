@@ -120,13 +120,36 @@ export const TwodeePolling = () => {
           // linkColor={(d) => colorScale(d.value)}
           // forceEngine={'graph'}
           ref={forceGraph}
-          onNodeDragEnd={(node) => {
-            node.fx = node.x;
-            node.fy = node.y;
-          }}
+          // onNodeDragEnd={(node) => {
+          //   node.fx = node.x;
+          //   node.fy = node.y;
+          // }}
           nodeLabel={(d) => d.id}
           linkLabel={(d) => `${d.source.id} > ${d.target.id} <br>Correlation value: ${d.value}`}
           linkOpacity={1}
+
+          nodeCanvasObject={(node, ctx, globalScale) => {
+            const label = node.id;
+            const fontSize = 16/globalScale;
+            ctx.font = `${fontSize}px Sans-Serif`;
+            const textWidth= ctx.measureText(label).width;
+            const bckgDimensions = [textWidth, fontSize].map(n=> n> fontSize * 0.2);
+
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8';
+            ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] /2, ...bckgDimensions);
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = "black";
+            ctx.fillText(label, node.x, node.y);
+
+            node.__bckgDimensions = bckgDimensions;
+          }}
+
+          nodePointerAreaPaint={(node, color, ctx) => {
+            ctx.fillStyle = color;
+            const bckgDimensions = node.__bckgDimensions;
+            bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] /2, ...bckgDimensions)
+          }}
         />
       ) : (
         <>Loading...</>

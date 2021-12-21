@@ -5,6 +5,9 @@ import { scaleLinear } from "d3";
 
 import { useData } from "./useData";
 
+import SpriteText from 'three-spritetext';
+// import SpriteText from 'three-spritetext';
+
 export const ThreedeePolling = () => {
   const [data, setData] = useState({ nodes: [], links: [] });
   const [dataLoad, setDataLoad] = useState(false);
@@ -113,17 +116,24 @@ export const ThreedeePolling = () => {
           }}
           linkLabel={(d) => `Correlation value: ${d.value}`}
           // linkCurvature={0.1}
-          nodeColor={(d) => (d.id[0] === "$" ? "#19686b" : "yellow")}
+          // nodeColor={(d) => (d.id[0] === "$" ? "#19686b" : "yellow")}
           linkWidth={(d) => myScale(d.value)}
           // linkCurveRotation={1}
           linkOpacity={0.5}
           // linkColor={(d) => colorScale(d.value)}
           // forceEngine={'graph'}
           ref={forceGraph}
-          onNodeDragEnd={(node) => {
-            node.fx = node.x;
-            node.fy = node.y;
+
+          nodeThreeObject={node => {
+            const sprite = new SpriteText(node.id);
+            sprite.color = "white";
+            sprite.textHeight = 8;
+            return sprite;
           }}
+          // onNodeDragEnd={(node) => {
+          //   node.fx = node.x;
+          //   node.fy = node.y;
+          // }}
         />
       ) : (
         <>Loading...</>
