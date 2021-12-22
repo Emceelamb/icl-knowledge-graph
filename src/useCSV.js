@@ -53,8 +53,9 @@ export const useCSV = (dataURL) => {
       });
       //links: [{"source": 3, "target": 2, "value": "aux"}, ...]
       // console.log(formattedData.nodes.filter((d) => d.id == "automobiles"));
+      const flat_data_removed = flat_data.filter((link) => link["value"] !== 0)
 
-      flat_data.map((item) => {
+      flat_data_removed.map((item) => {
         // const source = formattedData["nodes"].findIndex(
         //   (obj) => obj.value === item["parent_node"]
         // );
