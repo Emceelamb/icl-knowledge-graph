@@ -107,6 +107,7 @@ export const TwoNode = () => {
           ref={forceGraph}
           graphData={graphData} 
           linkLabel={(d) =>{ console.log(d) ;return `${d.source.id} > ${d.target.id} <br>Correlation value: ${d.value}`}}
+
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id;
             const fontSize = 12/globalScale;

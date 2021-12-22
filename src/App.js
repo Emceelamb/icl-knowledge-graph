@@ -15,6 +15,7 @@ import { ThreedeePolling } from "./ThreedeePolling";
 import { TwoNode } from "./TwoNode";
 import { TwoNode3d } from "./TwoNode3d";
 import { TwoNodeD3 } from "./TwoNodeD3";
+import { Dag } from './Dag';
 
 const Nav = () => {
   return (
@@ -47,6 +48,9 @@ const Nav = () => {
         <li>
           <Link to="/2nodeD3">2Node D3</Link>
         </li>
+        <li>
+          <Link to="/dag">Dag</Link>
+        </li>
       </ul>
     </div>
   );
@@ -65,6 +69,7 @@ function App() {
           <Route exact path="/2node" element={<TwoNode/>} />
           <Route exact path="/2node3d" element={<TwoNode3d/>} />
           <Route exact path="/2nodeD3" element={<TwoNodeD3/>} />
+          <Route exact path="/dag" element={<Dag/>} />
         </Routes>
       </Router>
     </>
