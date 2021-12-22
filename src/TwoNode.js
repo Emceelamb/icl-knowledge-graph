@@ -109,10 +109,10 @@ export const TwoNode = () => {
           linkLabel={(d) =>{ console.log(d) ;return `${d.source.id} > ${d.target.id} <br>Correlation value: ${d.value}`}}
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id;
-            const fontSize = 16/globalScale;
+            const fontSize = 12/globalScale;
             ctx.font = `${fontSize}px Sans-Serif`;
             const textWidth= ctx.measureText(label).width;
-            const bckgDimensions = [textWidth, fontSize].map(n=> n> fontSize * 0.2);
+            const bckgDimensions = [textWidth, fontSize].map(n=> n + fontSize * 0.2);
 
             ctx.fillStyle = 'rgba(255, 255, 255, 0.8';
             ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] /2, ...bckgDimensions);
