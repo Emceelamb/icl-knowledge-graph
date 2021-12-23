@@ -13,12 +13,21 @@ export const Dag = () => {
   const myScale = scaleLinear().domain([1, 10]).range([0, 3]);
   const colorScale = scaleLinear().domain([1, 10]).range(["#eff2f2", "red"]);
 
+  const linkDistScale = scaleLinear().domain([0,10]).range([0, 100]);
+  const linkStrengthScale = scaleLinear().domain([0,10]).range([0, 1]);
+
   useEffect(() => {
     console.log(data);
     if (!data) {
       return <>Loading</>;
     }
     forceGraph.current.d3Force("charge").strength(-500);
+    // if(forceGraph.current){
+    //   // forceGraph.current.d3Force("charge").strength(-500);
+    //   forceGraph.current.d3Force("link")
+    //     .distance(link =>{return linkDistScale(link.value)})
+    //     .strength(link =>{console.log(link.value, linkStrengthScale(link.value)); return linkStrengthScale(link.value)})
+    // }
   });
   return (
     <div>
@@ -36,8 +45,8 @@ export const Dag = () => {
           // linkColor={(d) => colorScale(d.value)}
           // forceEngine={'graph'}
           ref={forceGraph}
+            dagLevelDistance={100}
 
-         
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id;
             const fontSize = 12/globalScale;
@@ -61,7 +70,6 @@ export const Dag = () => {
             bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] /2, ...bckgDimensions)
           }}
 
-       
         />
       ) : (
         <>Loading</>

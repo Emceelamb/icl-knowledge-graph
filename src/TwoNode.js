@@ -32,10 +32,10 @@ export const TwoNode = () => {
     if (!data) {
       return <>Loading...</>;
     }
-    console.log(data)
+
     setSourceList(data.nodes.filter(n => n["id"].includes('stock')));
     setTargList(data.nodes.filter(n => !n["id"].includes('stock')));
-  });
+  }, [data]);
 
   const handleSourceSelect = (e) => {
     setSource(e.target.value);
@@ -70,6 +70,11 @@ export const TwoNode = () => {
     let link = data["links"].filter((l)=> l.source === src && l.target === trg)
     return link[0]
   }
+
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
 
   return (
     <>
@@ -110,7 +115,7 @@ export const TwoNode = () => {
 
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id;
-            const fontSize = 12/globalScale;
+            const fontSize = 16/globalScale;
             ctx.font = `${fontSize}px Sans-Serif`;
             const textWidth= ctx.measureText(label).width;
             const bckgDimensions = [textWidth, fontSize].map(n=> n + fontSize * 0.2);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { csv, format } from "d3";
 
-export const useCSV = (dataURL) => {
+export const useCSVnoCor = (dataURL) => {
 
   const [data, setData] = useState(null);
 
@@ -57,7 +57,7 @@ export const useCSV = (dataURL) => {
       // REMOVEOS ZERO CORELLATION VALUES
       const flat_data_removed = flat_data.filter((link) => link["value"] !== 0)
 
-      flat_data.map((item) => {
+      flat_data_removed.map((item) => {
         // const source = formattedData["nodes"].findIndex(
         //   (obj) => obj.value === item["parent_node"]
         // );

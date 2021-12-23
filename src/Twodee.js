@@ -4,7 +4,7 @@ import { useRef, useState,  useEffect } from "react";
 import { scaleLinear } from "d3";
 
 // import { useData } from "./useData";
-import { useCSV } from "./useCSV";
+import { useCSVnoCor } from "./useCSVnoCor";
 
 const csvURL = [
   'https://gist.githubusercontent.com',
@@ -17,7 +17,7 @@ const csvURL = [
 ].join('/')
 
 export const Twodee = () => {
-  const data = useCSV(csvURL);
+  const data = useCSVnoCor(csvURL);
   // const data = useData(csvData);
   
   // const data = useData(csvData);
@@ -52,7 +52,7 @@ export const Twodee = () => {
           ref={forceGraph}
           graphData={data}
           nodeLabel={(d) => d.id}
-          linkLabel={(d) =>{ console.log(d) ;return `${d.source.id} > ${d.target.id} <br>Correlation value: ${d.value}`}}
+          linkLabel={(d) => `${d.source.id} > ${d.target.id} <br>Correlation value: ${d.value}`}
           // linkCurvature={0.1}
           nodeColor={(d) => (d.id[0] === "$" ? "#19686b" : "yellow")}
           linkWidth={(d) => { return myScale(d.value)}}
@@ -63,7 +63,7 @@ export const Twodee = () => {
 
           nodeCanvasObject={(node, ctx, globalScale) => {
             const label = node.id;
-            const fontSize = 12/globalScale;
+            const fontSize = 18/globalScale;
             ctx.font = `${fontSize}px Sans-Serif`;
             const textWidth= ctx.measureText(label).width;
             const bckgDimensions = [textWidth, fontSize].map(n=> n + fontSize * 0.2);
