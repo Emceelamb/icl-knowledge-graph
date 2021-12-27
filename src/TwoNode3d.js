@@ -33,10 +33,9 @@ export const TwoNode3d = () => {
     if (!data) {
       return <>Loading...</>;
     }
-    console.log(data)
     setSourceList(data.nodes.filter(n => n["id"].includes('stock')));
     setTargList(data.nodes.filter(n => !n["id"].includes('stock')));
-  });
+  }, [data]);
 
   const handleSourceSelect = (e) => {
     setSource(e.target.value);
@@ -77,7 +76,7 @@ export const TwoNode3d = () => {
       <label>
         Select source node:
         <select name="source-list" onChange={(e) => handleSourceSelect(e)}>
-          <option value="none" selected disabled hidden>Select a source</option>
+          <option value="none" defaultValue disabled hidden>Select a source</option>
           {sourceList &&
             sourceList.map((node, key) => {
               return <option key={key}>{node.id}</option>;
@@ -88,7 +87,7 @@ export const TwoNode3d = () => {
       <label style={{ marginLeft: "12px" }}>
         Select target node:
         <select name="target-list" onChange={e => handleTargSelect(e)}>
-          <option value="none" selected disabled hidden>Select a target</option>
+          <option value="none" defaultValue disabled hidden>Select a target</option>
           {targList &&
             targList.map((node, key) => {
               return <option key={key}>{node.id}</option>;
@@ -107,7 +106,7 @@ export const TwoNode3d = () => {
         <ForceGraph3D 
           ref={forceGraph}
           graphData={graphData} 
-          linkLabel={(d) =>{ console.log(d) ;return `${d.source.id} > ${d.target.id} <br>Correlation value: ${d.value}`}}
+          linkLabel={(d) =>{ return `${d.source.id} > ${d.target.id} <br>Correlation value: ${d.value}`}}
           linkColor={"white"}
           linkOpacity={1}
           nodeThreeObject={node => {

@@ -32,10 +32,9 @@ export const TwoNodeD3 = () => {
     if (!data) {
       return <>Loading...</>;
     }
-    console.log(data)
     setSourceList(data.nodes.filter(n => n["id"].includes('stock')));
     setTargList(data.nodes.filter(n => !n["id"].includes('stock')));
-  });
+  }, [data]);
 
   const handleSourceSelect = (e) => {
     setSource(e.target.value);
@@ -63,11 +62,47 @@ export const TwoNodeD3 = () => {
     return link[0]
   }
 
-  useEffect(()=>{
-    select('#graph')
-      .text('Hello')
 
-  }, [])
+
+
+  useEffect(()=>{
+    console.log(graphData["links"])
+    if(graphData){
+
+      select('#graph')
+      .selectAll('circle')
+      .data(graphData["nodes"])
+      .join('circle')
+      .transition()
+      .delay(100)
+      .attr('cx', (d, i) =>{console.log(i) ;return i * graphData["links"][0].value * 800 + 100})
+      .attr('cy', '10')
+      .attr('r', 4)
+
+      select('#graph')
+      .selectAll('rect')
+      .data(graphData["nodes"])
+      .join('rect')
+      .transition()
+      .delay(100)
+      .attr('x', '100')
+      .attr('y', '10')
+      .attr('width', (d, i )=> graphData["links"][0].value * i * 800)
+      .attr('height', 1)
+
+      select('#graph')
+      .selectAll('text')
+      .data(graphData["nodes"])
+      .join('text')
+      .transition()
+      .delay(100)
+      .text((d, i) => graphData["nodes"][i]["id"])
+      .attr('x', (d, i) =>{console.log(i) ;return i * graphData["links"][0].value * 800 + 100})
+      .attr('y', '40')
+      .style('text-anchor', 'middle')
+    }
+
+  }, [graphData])
 
   return (
     <>
@@ -100,7 +135,8 @@ export const TwoNodeD3 = () => {
         )
       }
 
-      <div id="graph">
+      <div>
+        <svg id="graph" height="800" width="960"></svg>
       </div>
 
     </>
