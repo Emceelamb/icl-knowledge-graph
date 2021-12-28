@@ -14,6 +14,9 @@ export const TwoNodeD3 = () => {
   const [graphData, setGraphData] = useState({ nodes: [], links: [] });
 
   const [corScore, setCorScore] = useState(null);
+  const [firstLoad, setFirstLoad] = useState(false)
+
+  const [isAnimating, setIsAnimating] = useState(false)
 
 
   const dataURL = [
@@ -44,38 +47,40 @@ export const TwoNodeD3 = () => {
     setTarget(e.target.value);
   }
 
-  const linkDistScale = scaleLinear().domain([1,0]).range([0, 100]);
-  const linkStrengthScale = scaleLinear().domain([0,1]).range([0, 1]);
-
-  useEffect(()=>{
-
-    if(source && targ){
-      const link = findLink(source, targ)
-      setCorScore(link.value)
-      setGraphData({nodes:[{id: source}, {id:targ}], links:[link]})
-    }
-  }, [source, targ])
-
-
   const findLink = (src, trg) => {
     let link = data["links"].filter((l)=> l.source === src && l.target === trg)
     return link[0]
   }
 
+  const linkDistScale = scaleLinear().domain([1,0]).range([0, 100]);
+  const linkStrengthScale = scaleLinear().domain([0,1]).range([0, 1]);
+
+  useEffect(()=>{
+    console.log(source, targ, "from find link effect")
+    if(source && targ){
+      const link = findLink(source, targ)
+      if(link){
+        setCorScore(link.value)
+        setGraphData({nodes:[{id: source}, {id:targ}], links:[link]})
+      }
+    }
+    console.log(source, targ, "changed")
+  }, [source, targ])
+
+
+
 
 
 
   useEffect(()=>{
-    console.log(graphData["links"])
     if(graphData){
-
       select('#graph')
       .selectAll('circle')
       .data(graphData["nodes"])
       .join('circle')
       .transition()
       .delay(100)
-      .attr('cx', (d, i) =>{console.log(i) ;return i * graphData["links"][0].value * 800 + 100})
+      .attr('cx', (d, i) =>{return i * graphData["links"][0].value * 800 + 100})
       .attr('cy', '10')
       .attr('r', 4)
 
@@ -97,18 +102,58 @@ export const TwoNodeD3 = () => {
       .transition()
       .delay(100)
       .text((d, i) => graphData["nodes"][i]["id"])
-      .attr('x', (d, i) =>{console.log(i) ;return i * graphData["links"][0].value * 800 + 100})
+      .attr('x', (d, i) =>{return i * graphData["links"][0].value * 800 + 100})
       .attr('y', '40')
       .style('text-anchor', 'middle')
     }
 
   }, [graphData])
 
+  const handleSrcSelect=(e)=>{
+
+    setIsAnimating(true)
+    console.log("isAnimating: ",isAnimating)
+    setSource(e.target.value)
+    console.log(source, "is the source from cycle")
+    cycleSrcNode();
+
+  }
+  const cycleSrcNode = (e) => {
+    // console.log(e.target.value)
+
+    if(!firstLoad){
+      console.log("FirstLoad False")
+
+        for(let i = 0; i < targList.length; i++){
+          setTimeout(()=>{
+            setIsAnimating(false)
+          }, targList.length * 1000)
+          setTimeout(()=>{
+            setTarget(targList[i].id)
+
+            const link = findLink(source, targ)
+            if(link){
+
+            setCorScore(link.value)
+            setGraphData({nodes:[{id: source}, {id:targ}], links:[link]})
+            }
+          }, 1000 * i)
+        }
+
+    }
+    // setFirstLoad(true)
+    // targList.map((d, i)=>{
+    //   const timer = setTimeout(() => {
+    //     console.log(d, i)
+    //   }, 1000);
+    // })
+  }
+
   return (
     <>
       <label>
         Select source node:
-        <select name="source-list" onChange={(e) => handleSourceSelect(e)}>
+        <select name="source-list" onChange={(e) => handleSrcSelect(e)}  disabled={isAnimating ? true : null}>
           <option value="none" selected disabled hidden>Select a source</option>
           {sourceList &&
             sourceList.map((node, key) => {
@@ -117,6 +162,9 @@ export const TwoNodeD3 = () => {
         </select>
       </label>
 
+      <p>Is Animating: {"" + isAnimating}</p>
+
+      { firstLoad &&
       <label style={{ marginLeft: "12px" }}>
         Select target node:
         <select name="target-list" onChange={e => handleTargSelect(e)}>
@@ -128,12 +176,10 @@ export const TwoNodeD3 = () => {
         </select>
       </label>
 
-      <p>Source: {source}</p>
-      {
-        corScore && (
-          <p>Correlation: {corScore}</p>
-        )
       }
+
+      <p>Source: {source}</p>
+          <p>Correlation: {corScore}</p>
 
       <div>
         <svg id="graph" height="800" width="960"></svg>
