@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/icl-knowledge-graph/static/css/main.7af6d400.chunk.css",
-    "main.js": "/icl-knowledge-graph/static/js/main.75946dd2.chunk.js",
-    "main.js.map": "/icl-knowledge-graph/static/js/main.75946dd2.chunk.js.map",
+    "main.js": "/icl-knowledge-graph/static/js/main.7d7606d6.chunk.js",
+    "main.js.map": "/icl-knowledge-graph/static/js/main.7d7606d6.chunk.js.map",
     "runtime-main.js": "/icl-knowledge-graph/static/js/runtime-main.eab6fbe6.js",
     "runtime-main.js.map": "/icl-knowledge-graph/static/js/runtime-main.eab6fbe6.js.map",
     "static/js/2.50c1502e.chunk.js": "/icl-knowledge-graph/static/js/2.50c1502e.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.eab6fbe6.js",
     "static/js/2.50c1502e.chunk.js",
     "static/css/main.7af6d400.chunk.css",
-    "static/js/main.75946dd2.chunk.js"
+    "static/js/main.7d7606d6.chunk.js"
   ]
 }
