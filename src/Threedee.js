@@ -3,6 +3,7 @@ import { ForceGraph3D, ForceGraph2D } from "react-force-graph";
 import { useRef, useState, useEffect, useCallback, useMemo } from "react";
 import { scaleLinear } from "d3";
 import { useData } from "./useData";
+import SpriteText from 'three-spritetext';
 
 export const Threedee = () => {
   const data = useData(3);
@@ -27,18 +28,21 @@ export const Threedee = () => {
           nodeLabel={(d) => d.id}
           linkLabel={(d) => `Correlation value: ${d.value}`}
           // linkCurvature={0.1}
-          nodeColor={(d) => (d.id[0] === "$" ? "#19686b" : "yellow")}
+          // nodeColor={(d) => (d.id[0] === "$" ? "#19686b" : "yellow")}
           linkWidth={(d) => myScale(d.value)}
           // linkCurveRotation={1}
           linkOpacity={0.5}
           // linkColor={(d) => colorScale(d.value)}
           // forceEngine={'graph'}
           ref={forceGraph}
-          onNodeDragEnd={(node) => {
-            node.fx = node.x;
-            node.fy = node.y;
-            node.fz = node.z;
+
+          nodeThreeObject={node => {
+            const sprite = new SpriteText(node.id);
+            sprite.color = "white";
+            sprite.textHeight = 8;
+            return sprite;
           }}
+       
         />
       ) : (
         <>Loading</>

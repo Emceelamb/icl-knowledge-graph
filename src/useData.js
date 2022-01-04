@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { json } from "d3";
 
 export const useData = (NUM) => {
@@ -26,6 +26,7 @@ export const useData = (NUM) => {
           if (formattedData.nodes.filter((e) => e.id === node).length === 0) {
             formattedData.nodes.push({ id: node });
           }
+
         });
         //links: [{"source": 3, "target": 2, "value": "aux"}, ...]
         // console.log(formattedData.nodes.filter((d) => d.id == "automobiles"));

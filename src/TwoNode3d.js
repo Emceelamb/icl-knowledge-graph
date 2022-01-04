@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useCSV } from "./useCSV";
-import { ForceGraph2D } from "react-force-graph";
+import { ForceGraph3D } from "react-force-graph";
 import { scaleLinear } from 'd3';
+import  SpriteText  from 'three-spritetext';
 
-export const TwoNode = () => {
+export const TwoNode3d = () => {
   const forceGraph = useRef(null);
 
   const [source, setSource] = useState(null);
@@ -32,7 +33,6 @@ export const TwoNode = () => {
     if (!data) {
       return <>Loading...</>;
     }
-
     setSourceList(data.nodes.filter(n => n["id"].includes('stock')));
     setTargList(data.nodes.filter(n => !n["id"].includes('stock')));
   }, [data]);
@@ -71,17 +71,12 @@ export const TwoNode = () => {
     return link[0]
   }
 
-
-  useEffect(() => {
-    console.log(data)
-  }, [data])
-
   return (
     <>
       <label>
         Select source node:
         <select name="source-list" onChange={(e) => handleSourceSelect(e)}>
-          <option value="none" selected disabled hidden>Select a source</option>
+          <option value="none" defaultValue disabled hidden>Select a source</option>
           {sourceList &&
             sourceList.map((node, key) => {
               return <option key={key}>{node.id}</option>;
@@ -92,7 +87,7 @@ export const TwoNode = () => {
       <label style={{ marginLeft: "12px" }}>
         Select target node:
         <select name="target-list" onChange={e => handleTargSelect(e)}>
-          <option value="none" selected disabled hidden>Select a target</option>
+          <option value="none" defaultValue disabled hidden>Select a target</option>
           {targList &&
             targList.map((node, key) => {
               return <option key={key}>{node.id}</option>;
@@ -108,34 +103,18 @@ export const TwoNode = () => {
       }
 
       {graphData.nodes.length > 0 ? (
-        <ForceGraph2D 
+        <ForceGraph3D 
           ref={forceGraph}
           graphData={graphData} 
-          linkLabel={(d) =>{ console.log(d) ;return `${d.source.id} > ${d.target.id} <br>Correlation value: ${d.value}`}}
-
-          nodeCanvasObject={(node, ctx, globalScale) => {
-            const label = node.id;
-            const fontSize = 16/globalScale;
-            ctx.font = `${fontSize}px Sans-Serif`;
-            const textWidth= ctx.measureText(label).width;
-            const bckgDimensions = [textWidth, fontSize].map(n=> n + fontSize * 0.2);
-
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.8';
-            ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] /2, ...bckgDimensions);
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillStyle = "black";
-            ctx.fillText(label, node.x, node.y);
-
-            node.__bckgDimensions = bckgDimensions;
+          linkLabel={(d) =>{ return `${d.source.id} > ${d.target.id} <br>Correlation value: ${d.value}`}}
+          linkColor={"white"}
+          linkOpacity={1}
+          nodeThreeObject={node => {
+            const sprite = new SpriteText(node.id);
+            sprite.color = "white";
+            sprite.textHeight = 8;
+            return sprite;
           }}
-
-          nodePointerAreaPaint={(node, color, ctx) => {
-            ctx.fillStyle = color;
-            const bckgDimensions = node.__bckgDimensions;
-            bckgDimensions && ctx.fillRect(node.x - bckgDimensions[0] / 2, node.y - bckgDimensions[1] /2, ...bckgDimensions)
-          }}
-
         />
       ) : (
         <></>
